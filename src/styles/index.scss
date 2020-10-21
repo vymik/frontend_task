@@ -1,7 +1,20 @@
+@import 'Lato.scss';
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+}
+
+* {
+  font-family: 'Lato', sans-serif;
+  user-select: none;
+  transition: .1s filter;
+}
+
+html {
+  font-size: 16px;
 }
 
 body {

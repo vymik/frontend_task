@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import * as css from './styles/SearchBar.scss';
-
 interface ISearchBarProps {
     searchValue: string;
     onSearch: () => void;
@@ -24,7 +22,7 @@ export const SearchBar: React.FunctionComponent<ISearchBarProps> = props => {
                     type='text'
                     className='br_radius'
                     value={props.searchValue}
-                    placeholder='Search input'
+                    placeholder='Enter city'
                     autoFocus
                 />
                 <div className='buttons_container flex'>
