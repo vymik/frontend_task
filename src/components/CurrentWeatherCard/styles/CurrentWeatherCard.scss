@@ -1,0 +1,53 @@
+@import 'src/styles/style';
+
+.current-weather {
+  width: 80%;
+  height: 40%;
+  margin: 0 auto;
+  padding: 3rem 3rem 5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: $BORDER_RADIUS;
+  box-shadow: $BOX_SHADOW;
+  display: grid;
+  grid-template-rows: repeat(2, 2rem) 1fr;
+
+  &__date,
+  &__city {
+    text-align: left;
+  }
+
+  &__date {
+    opacity: .4;
+  }
+
+  &__city {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  &__weather-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  &__temp,
+  &__condition {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: $PADDING;
+
+    &__title {
+      font-weight: 700;
+    }
+
+    &__description {
+      margin-top: 1rem;
+      opacity: .5;
+    }
+  }
+
+  &__temp {
+    font-size: 8rem;
+    font-weight: 700;
+  }
+}

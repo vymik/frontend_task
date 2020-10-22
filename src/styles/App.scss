@@ -1,9 +1,26 @@
-.app {
+.container {
     height: 100vh;
     width: 100vw;
-    background: url('./assets/background.jpg') no-repeat center;
+    background: url('./assets/mountain.jpg') no-repeat;
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.weather {
+    width: 800px;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    &__header {
+        font-weight: 700;
+        font-size: 2rem;
+        color: #ffffff;
+        text-shadow: 1px 1px 1px #000000;
+    }
 }

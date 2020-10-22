@@ -1,10 +1,11 @@
 import React, {useCallback, useState} from 'react';
 import {SearchBar} from './components/SearchBar/SearchBar';
-import {CardList} from './components/CardList/CardList';
+import {ForecastCardList} from './components/ForecastCardList/ForecastCardList';
 import {isDefined, useStateSelector} from './utils/utils';
 import {useDispatch} from 'react-redux';
 import {setCurrentWeather, setErrorMessage, setForecast} from './reducer/rootReducer';
 import './styles/App.scss';
+import {CurrentWeatherCard} from './components/CurrentWeatherCard/CurrentWeatherCard';
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const apiUrl = 'https://api.openweathermap.org/data/2.5';
@@ -81,21 +82,24 @@ export const App = () => {
     }, [searchValue, getWeather]);
 
     return (
-        <div className='app'>
-            <header className='app-header'>
-            Weather App
-            </header>
-            <SearchBar
-                onInputChange={onInputChange}
-                searchValue={searchValue}
-                onSave={addToFavoritesList}
-                onSearch={handleSearch}
-            />
-            {
-                isLoading &&
-                    <div>KRAUNASI</div>
-            }
-            <CardList />
+        <div className='container'>
+            <div className='weather'>
+                <header className='weather__header'>
+                Weather App
+                </header>
+                <SearchBar
+                    onInputChange={onInputChange}
+                    searchValue={searchValue}
+                    onSave={addToFavoritesList}
+                    onSearch={handleSearch}
+                />
+                {
+                    isLoading &&
+                        <div>KRAUNASI</div>
+                }
+                <CurrentWeatherCard />
+                <ForecastCardList />
+            </div>
         </div>
     );
 };

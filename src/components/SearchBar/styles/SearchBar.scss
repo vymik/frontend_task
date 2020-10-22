@@ -1,0 +1,41 @@
+@import 'src/styles/style';
+
+.search-bar {
+  margin: 1rem auto;
+  display: grid;
+  grid-template-rows: 2.5rem 2.5rem;
+  grid-gap: $GRID_GAP;
+  width: 80%;
+
+  &__input {
+    border-radius: $BORDER_RADIUS;
+    padding: 0 $PADDING;
+    outline: none;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #b9b9b9;
+  }
+
+  &__buttons {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: $GRID_GAP;
+  }
+
+  &__button {
+    padding: 0 $PADDING;
+    font-weight: 700;
+    color: $TELIA_MAIN;
+    background-color: #f8f8f8;
+    border: none;
+    border-radius: $BORDER_RADIUS;
+    box-shadow: $BOX_SHADOW;
+
+    &:hover {
+      background-color: $TELIA_MAIN;
+      color: $WHITE;
+      cursor: pointer;
+      transition: .2s;
+    }
+  }
+}

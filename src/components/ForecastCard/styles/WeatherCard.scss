@@ -1,0 +1,22 @@
+@import 'src/styles/style';
+
+.forecast-card {
+  background-color: #f8f8f8;
+  border-radius: $BORDER_RADIUS;
+  box-shadow: $BOX_SHADOW;
+  padding: $PADDING;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition-property: transform;
+
+  &:hover {
+    transform: scale(1.15);
+    transition: all .4s ;
+  }
+
+  &__icon {
+    width: 50%;
+    padding: $PADDING 0;
+  }
+}

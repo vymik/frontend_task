@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './styles/SearchBar.scss';
 
 interface ISearchBarProps {
     searchValue: string;
@@ -15,29 +16,30 @@ export const SearchBar: React.FunctionComponent<ISearchBarProps> = props => {
     };
 
     return (
-        <div className='search_bar_container'>
-            <form className='flex'>
-                <input
-                    onChange={props.onInputChange}
-                    type='text'
-                    className='br_radius'
-                    value={props.searchValue}
-                    placeholder='Enter city'
-                    autoFocus
-                />
-                <div className='buttons_container flex'>
-                    <button
-                        type='submit'
-                        className='br_radius'
-                        onClick={handleSubmit}
-                    >
-                        Search
-                    </button>
-                    <button className='br_radius' onClick={props.onSave}>
-                        Save
-                    </button>
-                </div>
-            </form>
-        </div>
+        <form className='search-bar'>
+            <input
+                onChange={props.onInputChange}
+                type='text'
+                className='search-bar__input'
+                value={props.searchValue}
+                placeholder='Enter city'
+                autoFocus
+            />
+            <div className='search-bar__buttons'>
+                <button
+                    type='submit'
+                    className='search-bar__button'
+                    onClick={handleSubmit}
+                >
+                        Get Weather
+                </button>
+                <button
+                    className='search-bar__button'
+                    onClick={props.onSave}
+                >
+                        Add to Favorites
+                </button>
+            </div>
+        </form>
     );
 };
