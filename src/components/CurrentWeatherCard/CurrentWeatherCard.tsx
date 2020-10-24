@@ -1,31 +1,36 @@
 import * as React from 'react';
 
 import './styles/CurrentWeatherCard.scss';
+import {useStateSelector} from '../../utils/utils';
+import {ICurrentWeather} from '../../reducer/rootReducer';
+import moment from 'moment';
 
 interface ICurrentWeatherCardProps {
 
 }
 
 export const CurrentWeatherCard: React.FunctionComponent<ICurrentWeatherCardProps> = props => {
+    const currentWeather = useStateSelector<ICurrentWeather | null>(state => state.weather.current);
+    const currentDate = new Date();
 
     return (
         <div className='current-weather'>
             <div className='current-weather__date'>
-                October 22, 2020
+                {moment(currentDate).format('llll')}
             </div>
             <div className='current-weather__city'>
-                Vilnius
+                {currentWeather?.location}
             </div>
             <div className='current-weather__weather-info'>
                 <div className='current-weather__temp'>
-                    <span>18°</span>
+                    <span>{currentWeather?.temp}°</span>
                 </div>
                 <div className='current-weather__condition'>
                     <div className='current-weather__condition__title'>
-                        Cloudy
+                        {currentWeather?.condition.main}
                     </div>
                     <div className='current-weather__condition__description'>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing.
+                        {currentWeather?.condition.description}
                     </div>
                 </div>
             </div>

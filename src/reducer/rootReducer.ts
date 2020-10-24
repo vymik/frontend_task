@@ -1,11 +1,18 @@
-interface ICurrentWeather {
+interface IWeatherCondition {
+    main: string | null;
+    description: string | null;
+    icon: string | null;
+    id: number | null;
+}
+
+export interface ICurrentWeather {
     location: string | null;
     temp: number | null;
-    condition: string | null;
+    condition: IWeatherCondition;
 }
 
 interface IWeather {
-    current: ICurrentWeather;
+    current: ICurrentWeather | null;
     forecast: Array<any>;
 }
 
@@ -19,11 +26,7 @@ const DEFAULT_STATE: IState = {
     errorMessage: null,
     inputValidationMessage: null,
     weather: {
-        current: {
-            location: null,
-            temp: null,
-            condition: null
-        },
+        current: null,
         forecast: []
     }
 };

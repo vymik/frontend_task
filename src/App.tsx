@@ -1,11 +1,14 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {SearchBar} from './components/SearchBar/SearchBar';
 import {ForecastCardList} from './components/ForecastCardList/ForecastCardList';
 import {isDefined, useStateSelector} from './utils/utils';
 import {useDispatch} from 'react-redux';
-import {setCurrentWeather, setErrorMessage, setForecast} from './reducer/rootReducer';
+import {setCurrentWeather, setErrorMessage, setForecast, setInputValidationMessage} from './reducer/rootReducer';
 import './styles/App.scss';
 import {CurrentWeatherCard} from './components/CurrentWeatherCard/CurrentWeatherCard';
+import {getCurrentLocation} from './utils/getCurrentLocation';
+import {Loader} from './components/Loader/Loader';
+import {ErrorCard} from './components/ErrorCard/ErrorCard';
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const apiUrl = 'https://api.openweathermap.org/data/2.5';
@@ -20,6 +23,18 @@ enum WeatherType {
     ForeCast = 'forecast'
 }
 
+const useStateWithLocalStorage = (localStorageKey: string) => {
+    const [value, setValue] = useState(
+        localStorage.getItem(localStorageKey) || ''
+    );
+
+    useEffect(() => {
+        localStorage.setItem(localStorageKey, value);
+    }, [value]);
+
+    return [value, setValue];
+};
+
 export const App = () => {
     const dispatch = useDispatch();
     const [searchValue, setSearchValue] = useState<string>('');
@@ -28,25 +43,28 @@ export const App = () => {
     const [forecastList, setForecastList] = useState([]);
     const currentWeather = useStateSelector(state => state.weather.current);
     const weatherForecast = useStateSelector(state => state.weather.forecast);
+    const inputValidationMessage = useStateSelector(state => state.inputValidationMessage);
 
     const addToFavoritesList = () => {
         setFavoritesList([...favoritesList, searchValue]);
     };
 
     const validateInput = (input: string) => {
-        let error = null;
+        let message = null;
         if (input.length === 0) {
-            error = errorMessages.empty;
+            message = errorMessages.empty;
         }
         if (!/^[a-zA-Z]*$/g.test(input)) {
-            error = errorMessages.nonAlpha;
+            message = errorMessages.nonAlpha;
         }
-        return error;
+        if (message) {
+            dispatch(setInputValidationMessage(message));
+        }
+        return message;
     };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const query = event.target.value;
-        validateInput(query);
         setSearchValue(query);
     };
 
@@ -61,7 +79,7 @@ export const App = () => {
                     dispatch(setCurrentWeather(
                         {
                             location: weather.name,
-                            temp: weather.main.temp,
+                            temp: Math.round(weather.main.temp),
                             condition: weather.weather[0]
                         })
                     );
@@ -72,33 +90,72 @@ export const App = () => {
             .catch(error => dispatch(setErrorMessage(error)));
     };
 
-    const handleSearch = useCallback( () => {
-        // if (isDefined(errorMessage)) {
-        //     return;
-        // }
+    const getCurrentAndForecastWeather = (city: string) => {
+        return new Promise((resolve, reject) => {
+            Promise.all([
+                getWeather(WeatherType.Current, city),
+                getWeather(WeatherType.ForeCast, city)
+            ]).then(responses => resolve(responses)).catch(reject);
+        });
+    };
+
+    const handleSearch = async () => {
+        const isInvalid = !!validateInput(searchValue);
+        if (isInvalid) {
+            return;
+        }
         setIsLoading(true);
         const city = searchValue.trim();
-        getWeather(WeatherType.ForeCast, city).then(() => setIsLoading(false));
-    }, [searchValue, getWeather]);
+        await getCurrentAndForecastWeather(city);
+        setIsLoading(false);
+        setSearchValue('');
+    };
+
+    const handleGetCurrentLocationWeather = async () => {
+        setIsLoading(true);
+        const currentCity = await getCurrentLocation();
+        await getCurrentAndForecastWeather(currentCity);
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+
+    }, []);
 
     return (
         <div className='container'>
             <div className='weather'>
                 <header className='weather__header'>
-                Weather App
+                    Weather App
                 </header>
                 <SearchBar
                     onInputChange={onInputChange}
                     searchValue={searchValue}
-                    onSave={addToFavoritesList}
+                    onAddToFavorites={addToFavoritesList}
+                    onGetCurrentLocation={handleGetCurrentLocationWeather}
                     onSearch={handleSearch}
                 />
                 {
                     isLoading &&
-                        <div>KRAUNASI</div>
+                        <Loader />
                 }
-                <CurrentWeatherCard />
-                <ForecastCardList />
+                {
+                    !isLoading && inputValidationMessage &&
+                    <ErrorCard errorMessage={inputValidationMessage}/>
+                }
+                {
+                    !isLoading && !inputValidationMessage &&
+                    <>
+                        {
+                            currentWeather &&
+                            <CurrentWeatherCard />
+                        }
+                        {
+                            weatherForecast.length > 0 &&
+                            <ForecastCardList />
+                        }
+                    </>
+                }
             </div>
         </div>
     );

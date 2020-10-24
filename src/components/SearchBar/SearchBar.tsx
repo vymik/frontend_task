@@ -4,7 +4,8 @@ import './styles/SearchBar.scss';
 interface ISearchBarProps {
     searchValue: string;
     onSearch: () => void;
-    onSave: () => void;
+    onAddToFavorites: () => void;
+    onGetCurrentLocation: () => void;
     onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,6 +14,11 @@ export const SearchBar: React.FunctionComponent<ISearchBarProps> = props => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         props.onSearch();
+    };
+
+    const onCurrentLocationClick = (event: React.FormEvent) => {
+        event.preventDefault();
+        props.onGetCurrentLocation();
     };
 
     return (
@@ -35,9 +41,15 @@ export const SearchBar: React.FunctionComponent<ISearchBarProps> = props => {
                 </button>
                 <button
                     className='search-bar__button'
-                    onClick={props.onSave}
+                    onClick={props.onAddToFavorites}
                 >
                         Add to Favorites
+                </button>
+                <button
+                    className='search-bar__button'
+                    onClick={onCurrentLocationClick}
+                >
+                   Current Location
                 </button>
             </div>
         </form>
