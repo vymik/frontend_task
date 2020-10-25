@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {SearchBar} from './components/SearchBar/SearchBar';
 import {ForecastCardList} from './components/ForecastCardList/ForecastCardList';
 import {useStateSelector} from './utils/utils';
@@ -26,7 +26,7 @@ export const App = () => {
         if (cachedFavoritesList) {
             dispatch(setFavoriteCitiesList(JSON.parse(cachedFavoritesList)));
         }
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className='container'>

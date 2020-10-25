@@ -13,7 +13,8 @@ const setCurrentWeatherInStateAndCache = (weather: any, currentWeatherKey: strin
             condition: weather.weather[0]
         })
     );
-    // store in sessionStorage instead of localStorage, to fetch new data after session close
+    // Store in sessionStorage instead of localStorage, to fetch new data after session close.
+    // Maybe it`s not needed at all, cause weather info updates constantly, but lets keep it this way.
     sessionStorage.setItem(currentWeatherKey, JSON.stringify(weather));
 };
 

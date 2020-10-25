@@ -7,9 +7,17 @@ $BOX_SHADOW:
         0px 1px 1px 0px rgba(0,0,0,0.14),
         0px 1px 3px 0px rgba(0,0,0,0.12);
 
+@mixin mobile {
+  @media all and (max-width: 560px) {
+    @content;
+  }
+}
+
 // Colors
 
 $TELIA_MAIN: #990ae3;
 $BLACK_TEXT: #1c1f28;
 $SOFT_TEXT: #3A3D40;
 $WHITE: #FFFFFF
+
+

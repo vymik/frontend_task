@@ -1,15 +1,10 @@
 import * as React from 'react';
-
 import './styles/CurrentWeatherCard.scss';
 import {useStateSelector} from '../../utils/utils';
 import {ICurrentWeather} from '../../reducer/rootReducer';
 import moment from 'moment';
 
-interface ICurrentWeatherCardProps {
-
-}
-
-export const CurrentWeatherCard: React.FunctionComponent<ICurrentWeatherCardProps> = props => {
+export const CurrentWeatherCard: React.FunctionComponent = () => {
     const currentWeather = useStateSelector<ICurrentWeather | null>(state => state.weather.current);
     const currentDate = new Date();
 
