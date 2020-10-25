@@ -1,15 +1,10 @@
 import * as React from 'react';
-
 import './styles/CardList.scss';
 import {ForecastCard} from '../ForecastCard/ForecastCard';
 import {useStateSelector} from '../../utils/utils';
 const moment = require('moment');
 
-interface ICardListProps {
-
-}
-
-export const ForecastCardList: React.FunctionComponent<ICardListProps> = props => {
+export const ForecastCardList: React.FunctionComponent = () => {
     const forecastData = useStateSelector(state => state.weather.forecast);
     const bank: Array<any> = [];
     const today = moment().date();
@@ -30,7 +25,6 @@ export const ForecastCardList: React.FunctionComponent<ICardListProps> = props =
         <div className='card-list'>
             {
                 newData.map((day, index) => {
-                    console.log(day);
                     return (
                         <ForecastCard
                             key={index}

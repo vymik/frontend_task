@@ -7,3 +7,7 @@ export enum WeatherType {
     Current = 'weather',
     ForeCast = 'forecast'
 }
+
+export enum LocalStorageKeys {
+    FavoritesList = 'favoritesList'
+}

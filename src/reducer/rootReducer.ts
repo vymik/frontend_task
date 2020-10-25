@@ -40,7 +40,7 @@ enum Actions {
     SetInputValidationMessage = 'SetInputValidationMessage',
     SetCurrentWeather = 'SetCurrentWeather',
     SetForecast = 'SetForecast',
-    AddCityToFavoritesList = 'AddCityToFavoritesList',
+    SetFavoriteCitiesList = 'SetFavoriteCitiesList',
     ResetErrorAndInputMessages = 'ResetErrorAndInputMessages',
     ResetWeather = 'ResetWeather',
     SetIsLoading = 'SetIsLoading'
@@ -66,9 +66,9 @@ export const setForecast = (forecast: IWeather['forecast']) => ({
     payload: forecast
 });
 
-export const addCityToFavoritesList = (city: string) => ({
-    type: Actions.AddCityToFavoritesList,
-    payload: city
+export const setFavoriteCitiesList = (citiesList: Array<string>) => ({
+    type: Actions.SetFavoriteCitiesList,
+    payload: citiesList
 });
 
 export const resetErrorAndInputMessages = () => ({
@@ -112,10 +112,10 @@ export const rootReducer = (state = DEFAULT_STATE, action: {type: Actions; paylo
                     forecast: action.payload
                 }
             };
-        case Actions.AddCityToFavoritesList:
+        case Actions.SetFavoriteCitiesList:
             return {
                 ...state,
-                favoriteCitiesList: [...state.favoriteCitiesList, action.payload]
+                favoriteCitiesList: action.payload
             };
         case Actions.SetIsLoading:
             return {

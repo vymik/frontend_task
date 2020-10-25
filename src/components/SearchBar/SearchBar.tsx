@@ -1,17 +1,18 @@
 import * as React from 'react';
+import {useState} from 'react';
 import './styles/SearchBar.scss';
 import {useDispatch} from 'react-redux';
 import {useStateSelector} from '../../utils/utils';
 import {
-    addCityToFavoritesList,
     resetErrorAndInputMessages,
+    setFavoriteCitiesList,
     setInputValidationMessage,
     setIsLoading
 } from '../../reducer/rootReducer';
 import {validateInput} from '../../utils/validateInput';
 import {getCurrentAndForecastWeather} from '../../utils/getWeather';
 import {getCurrentLocation} from '../../utils/getCurrentLocation';
-import {useState} from 'react';
+import {LocalStorageKeys} from '../../constants/constants';
 
 export const SearchBar: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -62,7 +63,8 @@ export const SearchBar: React.FunctionComponent = () => {
     const onAddToFavorites = (event: React.FormEvent) => {
         event.preventDefault();
         if (currentCity && !isCityAlreadyInFavoritesList) {
-            dispatch(addCityToFavoritesList(currentCity));
+            dispatch(setFavoriteCitiesList([...favoritesList, currentCity]));
+            localStorage.setItem(LocalStorageKeys.FavoritesList, JSON.stringify([...favoritesList, currentCity]));
         }
     };
 
