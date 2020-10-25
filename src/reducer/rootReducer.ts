@@ -19,12 +19,14 @@ interface IWeather {
 export interface IState {
     errorMessage: string | null;
     inputValidationMessage: string | null;
+    favoriteCitiesList: Array<string>;
     weather: IWeather;
 }
 
 const DEFAULT_STATE: IState = {
     errorMessage: null,
     inputValidationMessage: null,
+    favoriteCitiesList: [],
     weather: {
         current: null,
         forecast: []
@@ -35,7 +37,9 @@ enum Actions {
     SetErrorMessage = 'SetErrorMessage',
     SetInputValidationMessage = 'SetInputValidationMessage',
     SetCurrentWeather = 'SetCurrentWeather',
-    SetForecast = 'SetForecast'
+    SetForecast = 'SetForecast',
+    AddCityToFavoritesList = 'AddCityToFavoritesList',
+    ResetErrorAndInputMessages = 'ResetErrorAndInputMessages'
 }
 
 export const setErrorMessage = (message: string) => ({
@@ -56,6 +60,15 @@ export const setCurrentWeather = (currentWeather: ICurrentWeather) => ({
 export const setForecast = (forecast: IWeather['forecast']) => ({
     type: Actions.SetForecast,
     payload: forecast
+});
+
+export const addCityToFavoritesList = (city: string) => ({
+    type: Actions.AddCityToFavoritesList,
+    payload: city
+});
+
+export const resetErrorAndInputMessages = () => ({
+    type:Actions.ResetErrorAndInputMessages
 });
 
 export const rootReducer = (state = DEFAULT_STATE, action: {type: Actions; payload: any}) => {
@@ -85,6 +98,17 @@ export const rootReducer = (state = DEFAULT_STATE, action: {type: Actions; paylo
                     ...state.weather,
                     forecast: action.payload
                 }
+            };
+        case Actions.AddCityToFavoritesList:
+            return {
+                ...state,
+                favoriteCitiesList: [...state.favoriteCitiesList, action.payload]
+            };
+        case Actions.ResetErrorAndInputMessages:
+            return {
+                ...state,
+                errorMessage: null,
+                inputValidationMessage: null
             };
         default:
             return state;

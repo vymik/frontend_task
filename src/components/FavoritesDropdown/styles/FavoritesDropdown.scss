@@ -1,0 +1,24 @@
+@import 'src/styles/style';
+
+select {
+  width: 80%;
+  margin: 0 auto 1rem;
+  padding: 0.75rem $PADDING;
+  border-radius: $BORDER_RADIUS;
+  border: 1px solid #b9b9b9;
+  outline: none;
+  font-size: 1rem;
+  color: #757575;
+  appearance: none;
+  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right rgba(255,255,255, 0.7);
+  background-position-x: calc(100% - 1rem);
+  background-size: .75rem;
+}
+
+.dropdown {
+  &__option {
+    padding: $PADDING;
+  }
+}
+
+

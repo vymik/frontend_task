@@ -3,7 +3,7 @@
 .search-bar {
   margin: 1rem auto;
   display: grid;
-  grid-template-rows: 2.5rem 2.5rem;
+  grid-template-rows: repeat(2, $ROW_HEIGHT);
   grid-gap: $GRID_GAP;
   width: 80%;
 
@@ -13,6 +13,11 @@
     outline: none;
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid #b9b9b9;
+    font-size: 1rem;
+
+    &:focus {
+      border-color: black;
+    }
   }
 
   &__buttons {
@@ -32,8 +37,26 @@
     border-radius: $BORDER_RADIUS;
     box-shadow: $BOX_SHADOW;
     outline: none;
+    position: relative;
+    overflow: hidden;
 
-    &:hover {
+    &:disabled {
+      cursor: default;
+      box-shadow: none;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        background-color: rgba(230, 230, 230, 0.7);
+      }
+    }
+
+    &:not(:disabled):hover {
       background-color: $TELIA_MAIN;
       color: $WHITE;
       cursor: pointer;
