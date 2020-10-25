@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/frontend_task/static/css/main.a525798a.chunk.css",
+    "main.js": "/frontend_task/static/js/main.1140f0e3.chunk.js",
+    "main.js.map": "/frontend_task/static/js/main.1140f0e3.chunk.js.map",
+    "runtime-main.js": "/frontend_task/static/js/runtime-main.396bffcd.js",
+    "runtime-main.js.map": "/frontend_task/static/js/runtime-main.396bffcd.js.map",
+    "static/js/2.3208012f.chunk.js": "/frontend_task/static/js/2.3208012f.chunk.js",
+    "static/js/2.3208012f.chunk.js.map": "/frontend_task/static/js/2.3208012f.chunk.js.map",
+    "index.html": "/frontend_task/index.html",
+    "precache-manifest.6fe9b1f1fa8fb1c5355b17214849f7b2.js": "/frontend_task/precache-manifest.6fe9b1f1fa8fb1c5355b17214849f7b2.js",
+    "service-worker.js": "/frontend_task/service-worker.js",
+    "static/css/main.a525798a.chunk.css.map": "/frontend_task/static/css/main.a525798a.chunk.css.map",
+    "static/js/2.3208012f.chunk.js.LICENSE.txt": "/frontend_task/static/js/2.3208012f.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/frontend_task/static/media/Lato-Regular.2d36b1a9.ttf",
+    "static/media/App.scss": "/frontend_task/static/media/mountain.4c44789d.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.396bffcd.js",
+    "static/js/2.3208012f.chunk.js",
+    "static/css/main.a525798a.chunk.css",
+    "static/js/main.1140f0e3.chunk.js"
+  ]
+}
