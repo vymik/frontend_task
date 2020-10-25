@@ -20,5 +20,6 @@ search form.
 
 1. Add unit tests.
 2. Improve style and mobile responsive.
+3. Add support for others browsers. App now correctly works on Chrome.
 4. Add cities suggestion list.
 5. Add Google maps block with preferred location.
