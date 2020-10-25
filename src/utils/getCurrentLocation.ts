@@ -6,6 +6,5 @@ export const getCurrentLocation = async () => {
     const ip = await publicIp.v4();
     const response = await fetch(`http://api.ipstack.com/${ip}?access_key=${API_KEY}`);
     const ipInfo = await response.json();
-    console.log(ipInfo);
     return ipInfo?.city;
 };

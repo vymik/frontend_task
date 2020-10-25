@@ -1,4 +1,4 @@
-import {setCurrentWeather, setErrorMessage, setForecast} from '../reducer/rootReducer';
+import {resetWeather, setCurrentWeather, setErrorMessage, setForecast} from '../reducer/rootReducer';
 import {WeatherType} from '../constants/constants';
 import {store} from '../index';
 
@@ -12,6 +12,7 @@ export const getWeather = (weatherType: WeatherType, city: string) => {
         .then(weather => {
             const responseStatusCode = Number(weather.cod);
             if (responseStatusCode !== 200) {
+                store.dispatch(resetWeather());
                 store.dispatch(setErrorMessage(weather.message));
                 return;
             }

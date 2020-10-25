@@ -1,15 +1,13 @@
 import * as React from 'react';
-
 import './styles/FavoritesDropdown.scss';
 import {useStateSelector} from '../../utils/utils';
 import {useState} from 'react';
 import {getCurrentAndForecastWeather} from '../../utils/getWeather';
+import {useDispatch} from 'react-redux';
+import {resetErrorAndInputMessages, setIsLoading} from '../../reducer/rootReducer';
 
-interface IFavoritesDropdownProps {
-    onCitySelect?: (event: React.ChangeEvent) => void;
-}
-
-export const FavoritesDropdown: React.FunctionComponent<IFavoritesDropdownProps> = props => {
+export const FavoritesDropdown: React.FunctionComponent = () => {
+    const dispatch = useDispatch();
     const favoriteCities = useStateSelector<Array<string>>(state => state.favoriteCitiesList);
     const currentCity = useStateSelector(state => state.weather.current?.location);
     const [value, setValue] = useState('');
@@ -18,8 +16,10 @@ export const FavoritesDropdown: React.FunctionComponent<IFavoritesDropdownProps>
         const selectedCity = event.target.value;
         setValue(selectedCity);
         if (selectedCity !== currentCity) {
-            console.log('geting weather');
-            getCurrentAndForecastWeather(selectedCity);
+            dispatch(resetErrorAndInputMessages());
+            dispatch(setIsLoading(true));
+            await getCurrentAndForecastWeather(selectedCity);
+            dispatch(setIsLoading(false));
         } else {
             setValue('');
         }
@@ -29,11 +29,10 @@ export const FavoritesDropdown: React.FunctionComponent<IFavoritesDropdownProps>
         <select
             className='dropdown'
             id='favorites'
-            placeholder='Favorite Cities'
-            onChange={(event) => handleSelect(event)}
+            onChange={event => handleSelect(event)}
             value={value}
         >
-            <option value='' disabled selected hidden>Select City From Favorites:</option>
+            <option value='' disabled hidden>Favorite cities:</option>
             {
                 favoriteCities.map((city,index) =>
                     <option

@@ -21,6 +21,7 @@ export interface IState {
     inputValidationMessage: string | null;
     favoriteCitiesList: Array<string>;
     weather: IWeather;
+    isLoading: boolean;
 }
 
 const DEFAULT_STATE: IState = {
@@ -30,7 +31,8 @@ const DEFAULT_STATE: IState = {
     weather: {
         current: null,
         forecast: []
-    }
+    },
+    isLoading: false
 };
 
 enum Actions {
@@ -39,7 +41,9 @@ enum Actions {
     SetCurrentWeather = 'SetCurrentWeather',
     SetForecast = 'SetForecast',
     AddCityToFavoritesList = 'AddCityToFavoritesList',
-    ResetErrorAndInputMessages = 'ResetErrorAndInputMessages'
+    ResetErrorAndInputMessages = 'ResetErrorAndInputMessages',
+    ResetWeather = 'ResetWeather',
+    SetIsLoading = 'SetIsLoading'
 }
 
 export const setErrorMessage = (message: string) => ({
@@ -68,10 +72,19 @@ export const addCityToFavoritesList = (city: string) => ({
 });
 
 export const resetErrorAndInputMessages = () => ({
-    type:Actions.ResetErrorAndInputMessages
+    type: Actions.ResetErrorAndInputMessages
 });
 
-export const rootReducer = (state = DEFAULT_STATE, action: {type: Actions; payload: any}) => {
+export const resetWeather = () => ({
+    type: Actions.ResetWeather
+});
+
+export const setIsLoading = (isLoading: boolean) => ({
+    type: Actions.SetIsLoading,
+    payload: isLoading
+});
+
+export const rootReducer = (state = DEFAULT_STATE, action: {type: Actions; payload?: any}) => {
     switch (action.type) {
         case Actions.SetErrorMessage:
             return {
@@ -104,11 +117,24 @@ export const rootReducer = (state = DEFAULT_STATE, action: {type: Actions; paylo
                 ...state,
                 favoriteCitiesList: [...state.favoriteCitiesList, action.payload]
             };
+        case Actions.SetIsLoading:
+            return {
+                ...state,
+                isLoading: action.payload
+            };
         case Actions.ResetErrorAndInputMessages:
             return {
                 ...state,
                 errorMessage: null,
                 inputValidationMessage: null
+            };
+        case Actions.ResetWeather:
+            return {
+                ...state,
+                weather: {
+                    current: null,
+                    forecast: []
+                }
             };
         default:
             return state;

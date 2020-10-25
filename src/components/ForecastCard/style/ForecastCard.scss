@@ -16,7 +16,10 @@
   }
 
   &__icon {
-    width: 50%;
     padding: $PADDING 0;
+
+    i {
+      font-size: 3.5rem;
+    }
   }
 }
